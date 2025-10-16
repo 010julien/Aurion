@@ -4,7 +4,8 @@ import { Mail, Lock, Zap, AlertCircle } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
 import Input from '../components/common/Input'
 import Button from '../components/common/Button'
-
+import logo from '../images/logo.png'
+import Arriere from '../images/arriere.jpeg'
 const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -35,23 +36,31 @@ const Login = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 flex items-center justify-center p-4">
-      <div className="max-w-md w-full">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 flex items-center justify-center p-4" style={{
+        backgroundImage: `url(${Arriere})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}>
+      <div className="max-w-md w-full" >
         {/* Logo & Title */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-aurion to-aurion-dark rounded-2xl mb-4 shadow-lg">
-            <Zap className="w-8 h-8 text-white" />
+          <div className="inline-flex items-center justify-center w-[200px] h-[10px] mt-8">
+            <img src={logo} alt="" className='w-auto h-auto'/>
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+          <h1 className="text-3xl font-bold text-white mb-2">
             Bienvenue sur Aurion
           </h1>
-          <p className="text-gray-600">
+          <p className="text-white">
             Connectez-vous pour gérer votre maison intelligente
           </p>
         </div>
 
         {/* Login Form */}
-        <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
+        <div className=" rounded-2xl shadow-xl p-8 border"
+        style={{
+          backgroundColor: 'rgba(255, 255, 255, 0.56)',
+          border: '1px solid rgba(0, 0, 0, 0.45)',
+        }}>
           <form onSubmit={handleSubmit} className="space-y-6">
             {error && (
               <div className="flex items-center space-x-2 p-4 bg-red-50 border border-red-200 rounded-lg">
@@ -118,9 +127,9 @@ const Login = () => {
         </div>
 
         {/* Demo Info */}
-        <div className="mt-6 text-center">
-          <p className="text-sm text-gray-500">
-            🚀 Mode démo : Utilisez n'importe quel email et mot de passe
+        <div className="mt-6 text-center mb-6">
+          <p className="text-sm text-white">
+            Mode démo : Utilisez n'importe quel email et mot de passe
           </p>
         </div>
       </div>
