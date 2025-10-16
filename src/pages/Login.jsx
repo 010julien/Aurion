@@ -44,12 +44,17 @@ const Login = () => {
       <div className="max-w-md w-full" >
         {/* Logo & Title */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-[200px] h-[10px] mt-8">
-            <img src={logo} alt="" className='w-auto h-auto'/>
-          </div>
-          <h1 className="text-3xl font-bold text-white mb-2">
+          
+          <div className='flex flex-col items-center justify-center w-auto h-auto '>
+          
+            <img src={logo} alt="" className='w-[180px] h-[180px]'/>
+          
+
+            <h1 className="text-3xl font-bold text-white mb-2">
             Bienvenue sur Aurion
-          </h1>
+            </h1>
+          </div>
+
           <p className="text-white">
             Connectez-vous pour gérer votre maison intelligente
           </p>
@@ -58,8 +63,9 @@ const Login = () => {
         {/* Login Form */}
         <div className=" rounded-2xl shadow-xl p-8 border"
         style={{
-          backgroundColor: 'rgba(255, 255, 255, 0.56)',
+          backgroundColor: 'rgba(255, 255, 255, 0.37)',
           border: '1px solid rgba(0, 0, 0, 0.45)',
+          backdropFilter: 'blur(10px)',
         }}>
           <form onSubmit={handleSubmit} className="space-y-6">
             {error && (

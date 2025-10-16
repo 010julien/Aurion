@@ -4,6 +4,8 @@ import { Mail, Lock, User, Phone, Zap, AlertCircle } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
 import Input from '../components/common/Input'
 import Button from '../components/common/Button'
+import Arriere from '../images/arriere.jpeg'
+import logo from '../images/logo.png'
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -63,12 +65,16 @@ const Register = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 flex items-center justify-center p-4" style={{
+            backgroundImage: `url(${Arriere})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}>
       <div className="max-w-md w-full">
         {/* Logo & Title */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-aurion to-aurion-dark rounded-2xl mb-4 shadow-lg">
-            <Zap className="w-8 h-8 text-white" />
+          <div className="inline-flex items-center justify-center w-[200px] h-[200px] rounded-2xl">
+            <img src={logo} alt="" className=''/>
           </div>
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
             Créer un compte
