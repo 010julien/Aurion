@@ -9,6 +9,9 @@ const api = axios.create({
   },
 })
 
+const DEMO = import.meta.env.VITE_ENABLE_DEMO === 'true'
+const FRONT_ONLY = import.meta.env.VITE_FRONT_ONLY === 'true'
+
 // Intercepteur de requête pour ajouter le token
 api.interceptors.request.use(
   (config) => {
@@ -35,7 +38,9 @@ api.interceptors.response.use(
         case 401:
           // Token expiré ou invalide
           localStorage.removeItem('token')
-          window.location.href = '/login'
+          if (!(DEMO || FRONT_ONLY)) {
+            window.location.href = '/login'
+          }
           break
         case 403:
           console.error('Accès refusé')
