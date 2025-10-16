@@ -1,5 +1,7 @@
 import api from './api'
 
+const DEMO = import.meta.env.DEV || import.meta.env.VITE_ENABLE_DEMO === 'true'
+
 export const authService = {
   // Connexion
   login: async (email, password) => {
@@ -7,8 +9,8 @@ export const authService = {
       const response = await api.post('/auth/login', { email, password })
       return response.data
     } catch (error) {
-      // Mode démo : accepter n'importe quel email/mot de passe
-      if (import.meta.env.DEV) {
+      // Mode démo : accepter n'importe quel email/mot de passe (DEV ou VITE_ENABLE_DEMO=true)
+      if (DEMO) {
         console.log('🚀 Mode démo activé - Connexion simulée')
         return {
           user: {
@@ -31,7 +33,7 @@ export const authService = {
       return response.data
     } catch (error) {
       // Mode démo
-      if (import.meta.env.DEV) {
+      if (DEMO) {
         console.log('🚀 Mode démo activé - Inscription simulée')
         return {
           user: {
@@ -63,7 +65,7 @@ export const authService = {
       return response.data
     } catch (error) {
       // Mode démo : récupérer depuis localStorage
-      if (import.meta.env.DEV) {
+      if (DEMO) {
         const demoUser = localStorage.getItem('demo_user')
         if (demoUser) {
           return JSON.parse(demoUser)

@@ -63,7 +63,7 @@ const Login = () => {
         {/* Login Form */}
         <div className=" rounded-2xl shadow-xl p-8 border"
         style={{
-          backgroundColor: 'rgba(255, 255, 255, 0.37)',
+          backgroundColor: 'rgba(255, 255, 255, 0.81)',
           border: '1px solid rgba(0, 0, 0, 0.45)',
           backdropFilter: 'blur(10px)',
         }}>
