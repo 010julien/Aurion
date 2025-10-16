@@ -133,11 +133,13 @@ const Login = () => {
         </div>
 
         {/* Demo Info */}
-        <div className="mt-6 text-center mb-6">
-          <p className="text-sm text-white">
-            Mode démo : Utilisez n'importe quel email et mot de passe
-          </p>
-        </div>
+        {import.meta.env.VITE_ENABLE_DEMO === 'true' && (
+          <div className="mt-6 text-center mb-6">
+            <p className="text-sm text-white">
+              Mode démo : Utilisez n'importe quel email et mot de passe
+            </p>
+          </div>
+        )}
       </div>
     </div>
   )

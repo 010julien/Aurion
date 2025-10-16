@@ -1,6 +1,7 @@
 import api from './api'
 
-const DEMO = import.meta.env.DEV || import.meta.env.VITE_ENABLE_DEMO === 'true'
+// Demo uniquement si explicitement activé via variable d'environnement
+const DEMO = import.meta.env.VITE_ENABLE_DEMO === 'true'
 
 export const authService = {
   // Connexion
