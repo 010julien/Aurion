@@ -17,6 +17,7 @@ import {
 import { useAuth } from '../contexts/AuthContext'
 import { useApp } from '../contexts/AppContext'
 import NotificationPanel from './NotificationPanel'
+import logo from '../images/logo.png'
 
 const Layout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -48,8 +49,8 @@ const Layout = () => {
           {/* Logo */}
           <div className="flex items-center flex-shrink-0 px-6 mb-8">
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-aurion to-aurion-dark rounded-xl flex items-center justify-center">
-                <Zap className="w-6 h-6 text-white" />
+              <div className="w-[4rem] h-[4rem] rounded-xl flex items-center justify-center">
+                <img src={logo} alt="Logo" className="w-full h-full" />
               </div>
               <div>
                 <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Aurion</h1>
