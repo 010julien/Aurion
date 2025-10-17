@@ -10,6 +10,8 @@ import {
   Activity,
 } from "lucide-react";
 import { useApp } from "../contexts/AppContext";
+import { aiService } from "../services/aiService";
+import RecommendationList from "../components/ai/RecommendationList";
 import StatCard from "../components/common/StatCard";
 import Card from "../components/common/Card";
 import Button from "../components/common/Button";
@@ -31,6 +33,7 @@ const Dashboard = () => {
   } = useApp();
 
   const [loading, setLoading] = useState(true);
+  const [recs, setRecs] = useState([]);
 
   useEffect(() => {
     const loadData = async () => {
@@ -40,6 +43,34 @@ const Dashboard = () => {
     };
     loadData();
   }, []);
+
+  // Générer des recommandations locales quand les données changent
+  useEffect(() => {
+    if (!loading) {
+      const items = aiService.generateRecommendations({
+        devices,
+        energyData,
+        sensors,
+        alerts,
+        settings,
+      });
+      setRecs(items);
+    }
+  }, [loading, devices, energyData, sensors, alerts, settings]);
+
+  const handleRecAction = async (action) => {
+    try {
+      if (action.type === 'toggle' && action.deviceId) {
+        await toggleDevice(action.deviceId);
+      } else if (action.type === 'navigate' && action.to) {
+        window.location.href = action.to;
+      } else if (action.type === 'away') {
+        await toggleAwayMode(true);
+      }
+    } catch (e) {
+      console.error('Erreur lors de l\'action de recommandation:', e);
+    }
+  };
 
   // Grouper les appareils par pièce
   const devicesByRoom = devices.reduce((acc, device) => {
