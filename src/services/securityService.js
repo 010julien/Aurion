@@ -1,66 +1,70 @@
 import api from './api'
 
+const DEMO = import.meta.env.VITE_ENABLE_DEMO === 'true'
+const FRONT_ONLY = import.meta.env.VITE_FRONT_ONLY === 'true'
+
 export const securityService = {
   // Obtenir tous les capteurs de sécurité
   getSensors: async () => {
-    try {
-      const response = await api.get('/security/sensors')
-      return response.data
-    } catch (error) {
-      // Données mockées pour le développement
-      if (import.meta.env.DEV) {
-        return getMockSensors()
-      }
-      throw error
+    if (FRONT_ONLY || DEMO) {
+      return getMockSensors()
     }
+    const response = await api.get('/security/sensors')
+    return response.data
   },
 
   // Obtenir un capteur spécifique
   getSensor: async (sensorId) => {
+    if (FRONT_ONLY || DEMO) {
+      return getMockSensors().find(s => s.id === sensorId)
+    }
     const response = await api.get(`/security/sensors/${sensorId}`)
     return response.data
   },
 
   // Obtenir toutes les alertes
   getAlerts: async (limit = 50) => {
-    try {
-      const response = await api.get('/security/alerts', { params: { limit } })
-      return response.data
-    } catch (error) {
-      if (import.meta.env.DEV) {
-        return getMockAlerts()
-      }
-      throw error
+    if (FRONT_ONLY || DEMO) {
+      return getMockAlerts().slice(0, limit)
     }
+    const response = await api.get('/security/alerts', { params: { limit } })
+    return response.data
   },
 
   // Acquitter une alerte
   acknowledgeAlert: async (alertId) => {
+    if (FRONT_ONLY || DEMO) {
+      return { id: alertId, acknowledged: true }
+    }
     const response = await api.post(`/security/alerts/${alertId}/acknowledge`)
     return response.data
   },
 
   // Obtenir les statistiques de sécurité
   getStats: async (period = '7d') => {
-    try {
-      const response = await api.get('/security/stats', { params: { period } })
-      return response.data
-    } catch (error) {
-      if (import.meta.env.DEV) {
-        return getMockStats()
-      }
-      throw error
+    if (FRONT_ONLY || DEMO) {
+      return getMockStats()
     }
+    const response = await api.get('/security/stats', { params: { period } })
+    return response.data
   },
 
   // Activer/désactiver un capteur
   toggleSensor: async (sensorId, enabled) => {
+    if (FRONT_ONLY || DEMO) {
+      const sensor = getMockSensors().find(s => s.id === sensorId)
+      return { ...sensor, status: enabled ? 'active' : 'inactive' }
+    }
     const response = await api.post(`/security/sensors/${sensorId}/toggle`, { enabled })
     return response.data
   },
 
   // Configurer les notifications
   configureNotifications: async (config) => {
+    if (FRONT_ONLY || DEMO) {
+      localStorage.setItem('security_notifications', JSON.stringify(config))
+      return { success: true }
+    }
     const response = await api.post('/security/notifications/config', config)
     return response.data
   },

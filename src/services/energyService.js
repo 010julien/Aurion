@@ -1,69 +1,52 @@
 import api from './api'
 
+const DEMO = import.meta.env.VITE_ENABLE_DEMO === 'true'
+const FRONT_ONLY = import.meta.env.VITE_FRONT_ONLY === 'true'
+
 export const energyService = {
   // Obtenir la consommation actuelle
   getConsumption: async () => {
-    try {
-      const response = await api.get('/energy/consumption')
-      return response.data
-    } catch (error) {
-      if (import.meta.env.DEV) {
-        return getMockConsumption()
-      }
-      throw error
+    if (FRONT_ONLY || DEMO) {
+      return getMockConsumption()
     }
+    const response = await api.get('/energy/consumption')
+    return response.data
   },
 
   // Obtenir l'historique de consommation
   getHistory: async (period = '7d') => {
-    try {
-      const response = await api.get('/energy/history', { params: { period } })
-      return response.data
-    } catch (error) {
-      if (import.meta.env.DEV) {
-        return getMockHistory(period)
-      }
-      throw error
+    if (FRONT_ONLY || DEMO) {
+      return getMockHistory(period)
     }
+    const response = await api.get('/energy/history', { params: { period } })
+    return response.data
   },
 
   // Obtenir les statistiques énergétiques
   getStats: async (period = 'month') => {
-    try {
-      const response = await api.get('/energy/stats', { params: { period } })
-      return response.data
-    } catch (error) {
-      if (import.meta.env.DEV) {
-        return getMockStats()
-      }
-      throw error
+    if (FRONT_ONLY || DEMO) {
+      return getMockStats()
     }
+    const response = await api.get('/energy/stats', { params: { period } })
+    return response.data
   },
 
   // Obtenir les prévisions de consommation
   getForecast: async () => {
-    try {
-      const response = await api.get('/energy/forecast')
-      return response.data
-    } catch (error) {
-      if (import.meta.env.DEV) {
-        return getMockForecast()
-      }
-      throw error
+    if (FRONT_ONLY || DEMO) {
+      return getMockForecast()
     }
+    const response = await api.get('/energy/forecast')
+    return response.data
   },
 
   // Obtenir la consommation par appareil
   getDeviceConsumption: async () => {
-    try {
-      const response = await api.get('/energy/devices')
-      return response.data
-    } catch (error) {
-      if (import.meta.env.DEV) {
-        return getMockDeviceConsumption()
-      }
-      throw error
+    if (FRONT_ONLY || DEMO) {
+      return getMockDeviceConsumption()
     }
+    const response = await api.get('/energy/devices')
+    return response.data
   },
 
   // Définir un seuil d'alerte
