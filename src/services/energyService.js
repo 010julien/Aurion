@@ -2,11 +2,12 @@ import api from './api'
 
 const DEMO = import.meta.env.VITE_ENABLE_DEMO === 'true'
 const FRONT_ONLY = import.meta.env.VITE_FRONT_ONLY === 'true'
+const FRONT_FALLBACK = !import.meta.env.VITE_API_URL
 
 export const energyService = {
   // Obtenir la consommation actuelle
   getConsumption: async () => {
-    if (FRONT_ONLY || DEMO) {
+    if (FRONT_ONLY || DEMO || FRONT_FALLBACK) {
       return getMockConsumption()
     }
     const response = await api.get('/energy/consumption')
@@ -15,7 +16,7 @@ export const energyService = {
 
   // Obtenir l'historique de consommation
   getHistory: async (period = '7d') => {
-    if (FRONT_ONLY || DEMO) {
+    if (FRONT_ONLY || DEMO || FRONT_FALLBACK) {
       return getMockHistory(period)
     }
     const response = await api.get('/energy/history', { params: { period } })
@@ -24,7 +25,7 @@ export const energyService = {
 
   // Obtenir les statistiques énergétiques
   getStats: async (period = 'month') => {
-    if (FRONT_ONLY || DEMO) {
+    if (FRONT_ONLY || DEMO || FRONT_FALLBACK) {
       return getMockStats()
     }
     const response = await api.get('/energy/stats', { params: { period } })
@@ -33,7 +34,7 @@ export const energyService = {
 
   // Obtenir les prévisions de consommation
   getForecast: async () => {
-    if (FRONT_ONLY || DEMO) {
+    if (FRONT_ONLY || DEMO || FRONT_FALLBACK) {
       return getMockForecast()
     }
     const response = await api.get('/energy/forecast')
@@ -42,7 +43,7 @@ export const energyService = {
 
   // Obtenir la consommation par appareil
   getDeviceConsumption: async () => {
-    if (FRONT_ONLY || DEMO) {
+    if (FRONT_ONLY || DEMO || FRONT_FALLBACK) {
       return getMockDeviceConsumption()
     }
     const response = await api.get('/energy/devices')

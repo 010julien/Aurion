@@ -2,11 +2,12 @@ import api from './api'
 
 const DEMO = import.meta.env.VITE_ENABLE_DEMO === 'true'
 const FRONT_ONLY = import.meta.env.VITE_FRONT_ONLY === 'true'
+const FRONT_FALLBACK = !import.meta.env.VITE_API_URL
 
 export const deviceService = {
   // Obtenir tous les appareils
   getDevices: async () => {
-    if (FRONT_ONLY || DEMO) {
+    if (FRONT_ONLY || DEMO || FRONT_FALLBACK) {
       return getMockDevices()
     }
     const response = await api.get('/devices')
@@ -15,7 +16,7 @@ export const deviceService = {
 
   // Obtenir un appareil spécifique
   getDevice: async (deviceId) => {
-    if (FRONT_ONLY || DEMO) {
+    if (FRONT_ONLY || DEMO || FRONT_FALLBACK) {
       return getMockDevices().find(d => d.id === deviceId)
     }
     const response = await api.get(`/devices/${deviceId}`)
@@ -24,7 +25,7 @@ export const deviceService = {
 
   // Basculer l'état d'un appareil (on/off)
   toggleDevice: async (deviceId) => {
-    if (FRONT_ONLY || DEMO) {
+    if (FRONT_ONLY || DEMO || FRONT_FALLBACK) {
       const devices = getMockDevices()
       const device = devices.find(d => d.id === deviceId)
       return { ...device, status: !device.status }
@@ -35,7 +36,7 @@ export const deviceService = {
 
   // Programmer un appareil
   scheduleDevice: async (deviceId, schedule) => {
-    if (FRONT_ONLY || DEMO) {
+    if (FRONT_ONLY || DEMO || FRONT_FALLBACK) {
       return { id: Date.now(), deviceId, ...schedule }
     }
     const response = await api.post(`/devices/${deviceId}/schedule`, schedule)
@@ -44,7 +45,7 @@ export const deviceService = {
 
   // Obtenir les programmations d'un appareil
   getDeviceSchedules: async (deviceId) => {
-    if (FRONT_ONLY || DEMO) {
+    if (FRONT_ONLY || DEMO || FRONT_FALLBACK) {
       return []
     }
     const response = await api.get(`/devices/${deviceId}/schedules`)
@@ -53,7 +54,7 @@ export const deviceService = {
 
   // Supprimer une programmation
   deleteSchedule: async (scheduleId) => {
-    if (FRONT_ONLY || DEMO) {
+    if (FRONT_ONLY || DEMO || FRONT_FALLBACK) {
       return { success: true }
     }
     const response = await api.delete(`/devices/schedules/${scheduleId}`)
@@ -62,7 +63,7 @@ export const deviceService = {
 
   // Activer le mode absence
   setAwayMode: async (enabled) => {
-    if (FRONT_ONLY || DEMO) {
+    if (FRONT_ONLY || DEMO || FRONT_FALLBACK) {
       localStorage.setItem('away_mode', JSON.stringify({ enabled }))
       return { enabled }
     }
@@ -72,7 +73,7 @@ export const deviceService = {
 
   // Obtenir l'état du mode absence
   getAwayMode: async () => {
-    if (FRONT_ONLY || DEMO) {
+    if (FRONT_ONLY || DEMO || FRONT_FALLBACK) {
       const raw = localStorage.getItem('away_mode')
       return raw ? JSON.parse(raw) : { enabled: false }
     }
